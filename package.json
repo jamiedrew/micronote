@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "serve": "serve -s client/build",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "dev": "concurrently \"nodemon index.js\" \"npm start --prefix client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
