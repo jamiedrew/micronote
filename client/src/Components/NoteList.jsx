@@ -129,7 +129,7 @@ const NoteList = () => {
 
             </div>
 
-            { !loading && 
+            { loading ? null :  
                 <div id="note-list">
 
                     {noteList.map(note =>
