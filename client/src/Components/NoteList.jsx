@@ -8,24 +8,21 @@ import "./NoteList.css";
 
 const NoteList = () => {
 
+    const [loading, setLoading] = useState(false);
+    const [noteList, setNoteList] = useState([]);
+    const [newNote, setNewNote] = useState("");
+    const [noteID, setNoteID] = useState("");
+
     const getLocalNotes = async () => {
         try {
-            setLoading(true);
-            
+            setLoading(true)
             const notes = await localforage.getItem("notes");
-            console.log(notes);
-            setNoteList(notes);
-
             setLoading(false);
+            setNoteList(notes);
         } catch (error) {
             console.error(error);
         }
     }
-
-    const [noteList, setNoteList] = useState([]);
-    const [newNote, setNewNote] = useState("");
-    const [noteID, setNoteID] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const submitNote = async (event) => {
         event.preventDefault();
@@ -60,7 +57,7 @@ const NoteList = () => {
                 };
     
                 setNoteList([submittedNote, ...noteList]);
-
+                
                 localforage.setItem("notes", [submittedNote, ...noteList])
                     .then(setNewNote(""));
             }
@@ -87,18 +84,18 @@ const NoteList = () => {
 
     }
 
+    // get local notes on page load
     useEffect(() => {
         getLocalNotes();
-    }, [])
+    }, []);
+
+    // just having a look
+    useEffect(() => console.log(noteList), [noteList])
 
     const deleteNote = id => async () => {
-
         const notesList = await localforage.getItem("notes")
-
         const filteredList = await localforage.setItem("notes", notesList.filter(item => item.id !== id));
-
         setNoteList(filteredList);
-
     }
 
     const editNote = (id, text) => () => {
@@ -129,7 +126,7 @@ const NoteList = () => {
 
             </div>
 
-            { loading ? null :  
+            { loading ? <p>Loading</p> :  
                 <div id="note-list">
 
                     {noteList.map(note =>
