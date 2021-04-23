@@ -1,0 +1,64 @@
+#new-note {
+    display: flex;
+    width: 50%;
+    margin-left: 3rem;
+    padding: 1rem;
+}
+
+#new-note > #text {
+    flex: 95;
+    margin-right: 0.4rem;
+}
+
+#text > textarea {
+    width: 600px;
+    min-width: 600px;
+    max-width: 1080px;
+    padding: 1rem;
+    min-height: 66px;
+    font-family: var(--nunito);
+}
+
+#new-note > #actions {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#new-note > #actions button {
+    padding: 10px 30px;
+    margin-top: 0.2rem;
+    margin-left: 0.2rem;
+    font-size: 1.2rem;
+    background: var(--coral);
+    border: 1px solid var(--coral);
+    color: var(--black);
+}
+
+#new-note > #actions button:hover {
+    cursor: pointer;
+    background: var(--black);
+    border: 1px solid var(--black);
+    color: var(--yellow);
+}
+
+@media (max-width: 1200px) {
+    #new-note {
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        text-align: center;
+        max-width: 800px;
+    }
+
+    #new-note > #text textarea {
+        width: 66%;
+        min-width: 350px;
+        max-width: 800px;
+    }
+
+    #new-note > #actions {
+        flex-direction: row;
+    }
+}
