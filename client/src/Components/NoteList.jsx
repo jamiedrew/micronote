@@ -126,19 +126,15 @@ const NoteList = () => {
 
             </div>
 
-            { loading ? <p>Loading</p> :  
-                <div id="note-list">
-
-                    {noteList.map(note =>
-                                    <Note
-                                        key={note.id}
-                                        id={note.id}
-                                        text={note.text}
-                                        deleteNote={deleteNote}
-                                        editNote={editNote} /> 
-                                    )}
-                </div>
-            }
+            <div id="note-list">
+                { noteList &&  
+                    noteList.map(note => <Note
+                                            key={note.id}
+                                            id={note.id}
+                                            text={note.text}
+                                            deleteNote={deleteNote}
+                                            editNote={editNote} /> ) }
+            </div>
 
             
 
