@@ -11,7 +11,7 @@ import "./NoteList.css";
 
 const NoteList = () => {
 
-    const [noteList, setNoteList] = useState();
+    const [noteList, setNoteList] = useState([]);
     const [newNote, setNewNote] = useState("");
     const [noteID, setNoteID] = useState("");
 
