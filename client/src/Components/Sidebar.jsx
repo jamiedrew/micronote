@@ -11,10 +11,10 @@ const Sidebar = () => {
                 <h3>mee 𐤟 cro 𐤟 no 𐤟 tay</h3>
             </div>
         
-            <div id="account-details">
+            {/* <div id="account-details">
                 <p>Jamie</p>
                 <p>Login</p>
-            </div>
+            </div> */}
             
         </div>
     )

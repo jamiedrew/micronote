@@ -141,12 +141,12 @@ const NoteList = () => {
 
             <div id="note-list">
                 { noteList && 
-                    noteList.map(note => <NoteComponent
+                    noteList.map(note => {if (note !== null) { return <NoteComponent
                                                 key={note.id}
                                                 id={note.id}
                                                 text={note.text}
                                                 deleteNote={deleteNote}
-                                                editNote={editNote} /> ) }
+                                                editNote={editNote} /> }} ) }
             </div>
 
             
