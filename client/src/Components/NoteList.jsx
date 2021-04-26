@@ -51,19 +51,12 @@ const NoteList = () => {
             if (newNote.length > 0) {
                 try {
                     const submittedNote = new Note(newNote);
-                    console.log(submittedNote);
-
-                    // setNoteList([...submittedNote, noteList]);
+                    console.log(submittedNote); 
                     
-                    const newNoteList = _.concat(noteList, submittedNote);
-                    newNoteList.reverse();
-
+                    const newNoteList = await localforage.setItem("notes", _.concat(noteList, submittedNote))
+                    console.log(newNoteList);
                     setNoteList(newNoteList);
-
-                    localforage.setItem("notes", newNoteList)
-                        .then(setNewNote(""));
-
-                    console.log(localforage.getItem("notes"));
+                    setNewNote("");
 
                 } catch (error) {
                     console.error(error);
