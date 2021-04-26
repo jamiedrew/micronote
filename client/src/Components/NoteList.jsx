@@ -8,6 +8,7 @@ import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-
 import { Note } from "../Utils/note";
 
 import "./NoteList.css";
+import e from "cors";
 
 const NoteList = () => {
 
@@ -31,7 +32,6 @@ const NoteList = () => {
         // if not it'll make a new one
         if (noteID !== "" && newNote !== "") {
             try {
-
                 const notes = await localforage.getItem("notes");
                 const note = notes.find(note => note.id === noteID);
 
@@ -43,7 +43,6 @@ const NoteList = () => {
                 setNoteList(notes);
                 setNewNote("");
                 setNoteID("");
-
             } catch (error) {
                 console.error(error);
             };
@@ -128,8 +127,8 @@ const NoteList = () => {
             </div>
 
             <div id="note-list">
-                { !noteList || noteList.length < 1 ? null : 
-                    _.map(noteList, note => <NoteComponent
+                { noteList && 
+                    noteList.map(note => <NoteComponent
                                                 key={note.id}
                                                 id={note.id}
                                                 text={note.text}
