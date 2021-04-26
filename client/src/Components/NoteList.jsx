@@ -51,7 +51,7 @@ const NoteList = () => {
                     const submittedNote = new Note(newNote);
                     console.log(submittedNote); 
                     
-                    const newNoteList = await localforage.setItem("notes", _.concat(noteList, submittedNote))
+                    const newNoteList = await localforage.setItem("notes", [submittedNote, ...noteList])
                     console.log(newNoteList);
                     setNoteList(newNoteList);
                     setNewNote("");
