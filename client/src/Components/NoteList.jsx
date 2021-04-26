@@ -8,11 +8,10 @@ import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-
 import { Note } from "../Utils/note";
 
 import "./NoteList.css";
-import e from "cors";
 
 const NoteList = () => {
 
-    const [noteList, setNoteList] = useState([]);
+    const [noteList, setNoteList] = useState();
     const [newNote, setNewNote] = useState("");
     const [noteID, setNoteID] = useState("");
 
