@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import localforage from "localforage";
+import _ from "lodash";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
 import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -8,16 +9,13 @@ import "./NoteList.css";
 
 const NoteList = () => {
 
-    const [loading, setLoading] = useState(false);
     const [noteList, setNoteList] = useState([]);
     const [newNote, setNewNote] = useState("");
     const [noteID, setNoteID] = useState("");
 
     const getLocalNotes = async () => {
         try {
-            setLoading(true)
             const notes = await localforage.getItem("notes");
-            setLoading(false);
             setNoteList(notes);
         } catch (error) {
             console.error(error);
@@ -49,17 +47,27 @@ const NoteList = () => {
             };
         } else {
             if (newNote.length > 0) {
-                let submittedNote = {
-                    id: `${Math.floor(Math.random() * 9999)}${Date.now()}`,
-                    text: newNote,
-                    createdDate: new Date().toISOString(),
-                    modifiedDate: new Date().toISOString()
-                };
-    
-                setNoteList([submittedNote, ...noteList]);
-                
-                localforage.setItem("notes", [submittedNote, ...noteList])
-                    .then(setNewNote(""));
+                try {
+                    let submittedNote = {
+                        id: `${Math.floor(Math.random() * 9999)}${Date.now()}`,
+                        text: newNote,
+                        createdDate: new Date().toISOString(),
+                        modifiedDate: new Date().toISOString()
+                    };
+                    
+                    setNoteList(_.concat(noteList, submittedNote))
+                    // console.log(noteList);
+
+                    // setNoteList([submittedNote, ...noteList]);
+
+                    localforage.setItem("notes", _.concat(noteList, submittedNote))
+                        .then(setNewNote(""));
+                    
+                    // console.log(localforage.getItem("notes"));
+
+                } catch (error) {
+                    console.error(error);
+                }
             }
         }
         
@@ -128,12 +136,12 @@ const NoteList = () => {
 
             <div id="note-list">
                 { noteList &&  
-                    noteList.map(note => <Note
-                                            key={note.id}
-                                            id={note.id}
-                                            text={note.text}
-                                            deleteNote={deleteNote}
-                                            editNote={editNote} /> ) }
+                    _.map(noteList, note => <Note
+                                                key={note.id}
+                                                id={note.id}
+                                                text={note.text}
+                                                deleteNote={deleteNote}
+                                                editNote={editNote} /> ) }
             </div>
 
             
