@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import localforage from "localforage";
-import _ from "lodash";
+import ReactMarkdown from "react-markdown";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
 import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import gfm from "remark-gfm";
 
-import { Note } from "../Utils/note";
+import { Note } from "../Utils/Classes/note";
 
 import "./NoteList.css";
 
@@ -21,18 +22,13 @@ const NoteList = () => {
 
             if (notes) {
                 setNoteList(notes);
-                console.log(notes);
             } else {
                 try {
                     localforage.setItem("notes", noteList)
-                        .then(console.log(noteList))
-                        .then(console.log(localforage.getItem("notes")));
                 } catch (error) {
                    console.error(error);
                 } 
-
             }
-
         } catch (error) {
             console.error(error);
         }
@@ -141,12 +137,15 @@ const NoteList = () => {
 
             <div id="note-list">
                 { noteList && 
-                    noteList.map(note => {if (note !== null) { return <NoteComponent
-                                                key={note.id}
-                                                id={note.id}
-                                                text={note.text}
-                                                deleteNote={deleteNote}
-                                                editNote={editNote} /> }} ) }
+                    noteList.map(note => {if (note !== null) {
+                        return <NoteComponent
+                                    key={note.id}
+                                    id={note.id}
+                                    text={note.text}
+                                    deleteNote={deleteNote}
+                                    editNote={editNote} /> }
+                        }
+                    ) }
             </div>
 
             
@@ -160,7 +159,7 @@ const NoteComponent = ({ text, id, editNote, deleteNote }) => {
 
     return (
         <div className="note">
-            <div className="text">{text}</div>
+            <ReactMarkdown className="text" remarkPlugins={[gfm]}>{text}</ReactMarkdown>
 
             <div className="actions">
                 <button onClick={editNote(id, text)}><FA icon={faPencilAlt} /></button>
