@@ -18,7 +18,21 @@ const NoteList = () => {
     const getLocalNotes = async () => {
         try {
             const notes = await localforage.getItem("notes");
-            setNoteList(notes);
+
+            if (notes) {
+                setNoteList(notes);
+                console.log(notes);
+            } else {
+                try {
+                    localforage.setItem("notes", noteList)
+                        .then(console.log(noteList))
+                        .then(console.log(localforage.getItem("notes")));
+                } catch (error) {
+                   console.error(error);
+                } 
+
+            }
+
         } catch (error) {
             console.error(error);
         }
