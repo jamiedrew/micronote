@@ -56,6 +56,7 @@ const NoteList = () => {
                     // setNoteList([...submittedNote, noteList]);
                     
                     const newNoteList = _.concat(noteList, submittedNote);
+                    newNoteList.reverse();
 
                     setNoteList(newNoteList);
 
@@ -134,7 +135,7 @@ const NoteList = () => {
             </div>
 
             <div id="note-list">
-                { noteList &&  
+                { !noteList || noteList.length < 1 ? null : 
                     _.map(noteList, note => <NoteComponent
                                                 key={note.id}
                                                 id={note.id}
