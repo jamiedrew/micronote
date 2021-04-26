@@ -5,6 +5,8 @@ import _ from "lodash";
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
 import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
+import { Note } from "../Utils/note";
+
 import "./NoteList.css";
 
 const NoteList = () => {
@@ -48,22 +50,19 @@ const NoteList = () => {
         } else {
             if (newNote.length > 0) {
                 try {
-                    let submittedNote = {
-                        id: `${Math.floor(Math.random() * 9999)}${Date.now()}`,
-                        text: newNote,
-                        createdDate: new Date().toISOString(),
-                        modifiedDate: new Date().toISOString()
-                    };
+                    const submittedNote = new Note(newNote);
+                    console.log(submittedNote);
+
+                    // setNoteList([...submittedNote, noteList]);
                     
-                    setNoteList(_.concat(noteList, submittedNote))
-                    // console.log(noteList);
+                    const newNoteList = _.concat(noteList, submittedNote);
 
-                    // setNoteList([submittedNote, ...noteList]);
+                    setNoteList(newNoteList);
 
-                    localforage.setItem("notes", _.concat(noteList, submittedNote))
+                    localforage.setItem("notes", newNoteList)
                         .then(setNewNote(""));
-                    
-                    // console.log(localforage.getItem("notes"));
+
+                    console.log(localforage.getItem("notes"));
 
                 } catch (error) {
                     console.error(error);
@@ -136,7 +135,7 @@ const NoteList = () => {
 
             <div id="note-list">
                 { noteList &&  
-                    _.map(noteList, note => <Note
+                    _.map(noteList, note => <NoteComponent
                                                 key={note.id}
                                                 id={note.id}
                                                 text={note.text}
@@ -151,7 +150,7 @@ const NoteList = () => {
     )
 }
 
-const Note = ({ text, id, editNote, deleteNote }) => {
+const NoteComponent = ({ text, id, editNote, deleteNote }) => {
 
     return (
         <div className="note">
