@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import * as localforage from "localforage";
+import { useCookies } from "react-cookie";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleUp } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +13,8 @@ const Account = ({ toggle, show, id, username, updateUserState, updateNoteList }
     const [ newUsername, setNewUsername ] = useState("");
     const [ newPassword, setNewPassword ] = useState("");
     const [ flashMessage, setFlashMessage ] = useState("");
+
+    const [ cookies, setCookies, removeCookies ] = useCookies();
 
     let accountClasses = ["account"];
 
@@ -30,16 +33,12 @@ const Account = ({ toggle, show, id, username, updateUserState, updateNoteList }
             localNotes: localNotes
         })
             .then(res => {
-
-                console.log(res.data);
-
                 if (res.data.status) {
                     updateUserState({
                         id: res.data.user._id,
                         username: res.data.user.username
                     });
                     toggle();
-                    window.location.reload();
                 } else {
                     setFlashMessage(res.data.message);
                 }
@@ -58,24 +57,22 @@ const Account = ({ toggle, show, id, username, updateUserState, updateNoteList }
         })
             .then(res => {
                 if (res.data.status) {
-                    updateUserState(res.data);
-                    updateNoteList(res.data.notes);
+                    updateUserState({ id: res.data.user.id, username: res.data.user.username});
+                    updateNoteList(res.data.user.notes);
                     toggle();
-                    window.location.reload();
                 } else {
                     setFlashMessage(res.data.message);
-                }  
+                }
             })
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
     };
 
     const logout = async() => {
         await axios.post("/account/logout")
-            .then(updateUserState({}))
-            .catch(err => console.error(err));
-
-        toggle();
-        window.location.reload();
+            .then(updateUserState({ }))
+            .then(removeCookies("micronote"))
+            .catch(err => console.error(err))
+            .finally(toggle());
     }
     
     return (

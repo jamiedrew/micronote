@@ -37,14 +37,14 @@ app.use("/account", require("./routes/account"));
 app.use("/notes", require("./routes/notes"));
 
 // for a request that doesn't match one of the above routes just send the index.html
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname+'/client/build/index.html'));
-// });
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
-app.get("/debug", (req, res) => {
-    if(process.env.ENV === "dev") {
-        res.json("Hello! This is the debug route!");
-    } else res.redirect("/");
-})
+// app.get("/debug", (req, res) => {
+//     if(process.env.ENV === "dev") {
+//         res.json("Hello! This is the debug route!");
+//     } else res.redirect("/");
+// })
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));

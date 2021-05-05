@@ -19,9 +19,6 @@ module.exports = {
             notes: doc.notes,
         };
 
-        console.log("formatted");
-        console.log(user)
-
         // compare database notes array with local one
         // put anything that's not already on the local array into the local array
         // anything that's on the local array and not the database, sendNote() that to the array
@@ -41,7 +38,9 @@ module.exports = {
             // else if (noteID)...
 
             const doc = await User.findById(userID);
+            console.log(`${doc.notes.length} in database for user ${userID}`);
             const newNotes = _.differenceWith(localNotes, doc.notes, _.isEqual);
+            console.log(`${newNotes.length} new notes to upload`)
 
             // for every one of these notes, if it's not returning equal we can update them via updateNote() if the id is the same, and if not, unshift it to the start of the queue
 
@@ -81,10 +80,11 @@ module.exports = {
                 await doc.save();
                 
             } else {
-                console.log("No new notes to upload!")
+                console.log(`doc.notes coming from sync.syncNotes:`)
+                console.log(doc.notes);
+                return doc.notes;
             }
-            
-            return doc.notes;
+        
         } catch (error) {
             console.error(error);
         };

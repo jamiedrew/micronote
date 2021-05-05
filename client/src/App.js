@@ -7,8 +7,6 @@ import Sidebar from "./Components/Sidebar";
 import NoteList from "./Components/NoteList";
 import Account from "./Components/Account";
 
-import events from "./Utils/events";
-
 import './App.css';
 
 function App() {
@@ -19,14 +17,6 @@ function App() {
   const [ notes, setNotes ] = useState([])
   const [ showAccount, setShowAccount ] = useState(false);
 
-  // get user on page load if a cookie exists for micronote
-  useEffect(() => {
-
-    getUserInfo();
-    getUserNotes();
-
-  }, [cookies])
-
   // pass down these functions to update them from the top level
   const updateUserState = async (user) => {
     await setUser(user);
@@ -35,6 +25,12 @@ function App() {
   const updateNoteList = async (list) => {
     await setNotes(list);
   }
+
+  // get user on page load if a cookie exists for micronote
+  useEffect(() => {
+    getUserInfo();
+    getUserNotes();
+  }, [cookies])
 
   // on page load
   const getUserInfo = async () => {
@@ -54,6 +50,7 @@ function App() {
     try {
       if (cookies.micronote) {
         const { data } = await axios.get("/notes", { list: notes })
+        console.log(data);
         // sync those changes to the local storage at the same time as setting the note list, for storage
         localforage.setItem("notes", data);
         setNotes(data);
@@ -70,9 +67,6 @@ function App() {
       console.error(error);
     };
   }
-
-  // flash messages
-  window.flash = (message, type="success") => events.emit("flash", (message, type));
 
   // // DEBUG - making sure the user is being set
   // useEffect(() => {

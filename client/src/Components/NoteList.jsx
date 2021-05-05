@@ -20,9 +20,15 @@ const NoteList = ({ notes, updateNoteList }) => {
 
     const submitNote = async (event) => {
         event.preventDefault();
+
+        const jwt = cookies.micronote;
+        console.log(jwt);
+
         // if the state holds a noteID, it'll update that note
         // if not it'll make a new one
         if (noteID !== "" && newNote !== "") {
+            
+
             try {
                 const localNotes = await localforage.getItem("notes");
                 const noteToUpdate = localNotes.find(note => note.id === noteID);
@@ -31,7 +37,7 @@ const NoteList = ({ notes, updateNoteList }) => {
                 noteToUpdate.text = newNote;
                 noteToUpdate.modifiedDate = updatedDate;
 
-                if (cookies.micronote) {
+                if (jwt) {
                     axios.put(`/notes/${noteID}`, {
                         text: newNote,
                         modifiedDate: updatedDate
@@ -53,7 +59,7 @@ const NoteList = ({ notes, updateNoteList }) => {
                     const submittedNote = new Note(newNote);
                     const newNoteList = await localforage.setItem("notes", [submittedNote, ...notes])
                     
-                    if (cookies.micronote) {
+                    if (jwt) {
                         axios.post("/notes", {
                             list: newNoteList,
                             note: submittedNote

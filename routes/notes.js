@@ -6,8 +6,12 @@ const sync = require("../db/sync");
 router.get("/", async (req, res) => {
     try {
         const user = await jwt.verify(req.cookies.micronote, process.env.SECRET);
-        console.log(req.body);
+        console.log("user sent to GET /notes:")
+        console.log(user.id);
+
         const data = await sync.syncNotes(user.id, req.body.list);
+        console.log("data coming from GET /notes:");
+        console.log(data);
 
         res.send(data);
     } catch (error) {

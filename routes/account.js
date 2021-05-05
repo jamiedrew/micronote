@@ -97,11 +97,14 @@ router.post("/login", async (req, res, next) => {
                 // set jwt
                 const token = jwt.sign({ id: user._id, username: user.username }, process.env.SECRET)
                 res.cookie("micronote", token);
-                res.send({
-                    id: user.id,
-                    username: user.username,
-                    notes: user.notes
-                 });
+                res.json({
+                    status: true,
+                    user: {
+                        id: user.id,
+                        username: user.username,
+                        notes: user.notes
+                    }
+                });
             }
             
 
