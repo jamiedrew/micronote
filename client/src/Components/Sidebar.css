@@ -1,0 +1,87 @@
+#logo {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+#logo img {
+    height: 64px;
+}
+
+#sidebar-contents .info button {
+    cursor: pointer;
+}
+
+#sidebar-contents .info button:hover {
+    color: var(--yellow);
+    background-color: var(--black);
+}
+
+#sidebar-contents .options {
+    padding: 0.6rem;
+    display: flex;
+    gap: 0.4rem;
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+}
+
+#sidebar-contents .options > button {
+    font-size: 1rem;
+    padding: 1rem;
+}
+
+@media (max-width: 1200px) {
+    #sidebar-contents {
+        height: 5rem;
+        width: 85%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0;
+    }
+
+    #logo img {
+        height: 40px;
+    }
+
+    #logo h3 {
+        display: none;
+    }
+
+    #account-details {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 630px) {
+    #sidebar-contents {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem auto;
+    }
+
+    #logo {
+        flex-direction: column;
+    }
+
+    #logo img {
+        height: 32px;
+        margin-bottom: -1rem;
+    }
+
+    .info button {
+        font-size: 1rem;
+        font-family: var(--nunito);
+        padding: 0.2rem 0.6rem;
+    }
+}
