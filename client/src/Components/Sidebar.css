@@ -7,6 +7,29 @@
     height: 64px;
 }
 
+#sidebar-contents .info button {
+    cursor: pointer;
+}
+
+#sidebar-contents .info button:hover {
+    color: var(--yellow);
+    background-color: var(--black);
+}
+
+#sidebar-contents .options {
+    padding: 0.6rem;
+    display: flex;
+    gap: 0.4rem;
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+}
+
+#sidebar-contents .options > button {
+    font-size: 1rem;
+    padding: 1rem;
+}
+
 @media (max-width: 1200px) {
     #sidebar-contents {
         height: 5rem;
@@ -14,6 +37,7 @@
         margin: auto;
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     #logo {
@@ -53,5 +77,11 @@
     #logo img {
         height: 32px;
         margin-bottom: -1rem;
+    }
+
+    .info button {
+        font-size: 1rem;
+        font-family: var(--nunito);
+        padding: 0.2rem 0.6rem;
     }
 }

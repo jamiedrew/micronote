@@ -14,6 +14,9 @@ body {
   flex-direction: row;
 }
 
+button {
+  border-radius: 3px;
+}
 
 #sidebar {
   width: 20%;

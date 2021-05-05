@@ -1,124 +1,117 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useCookies } from "react-cookie";
 import localforage from "localforage";
 import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import axios from "axios";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
 import { faTrash, faPencilAlt, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
-import gfm from "remark-gfm";
 
 import { Note } from "../Utils/Classes/note";
 
 import "./NoteList.css";
 
-const NoteList = () => {
+const NoteList = ({ notes, updateNoteList }) => {
 
-    const [noteList, setNoteList] = useState([]);
     const [newNote, setNewNote] = useState("");
     const [noteID, setNoteID] = useState("");
-
-    const getLocalNotes = async () => {
-        try {
-            const notes = await localforage.getItem("notes");
-
-            if (notes) {
-                setNoteList(notes);
-            } else {
-                try {
-                    localforage.setItem("notes", noteList)
-                } catch (error) {
-                   console.error(error);
-                } 
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    const [cookies, setCookies] = useCookies();
 
     const submitNote = async (event) => {
         event.preventDefault();
-
         // if the state holds a noteID, it'll update that note
         // if not it'll make a new one
         if (noteID !== "" && newNote !== "") {
             try {
-                const notes = await localforage.getItem("notes");
-                const note = notes.find(note => note.id === noteID);
+                const localNotes = await localforage.getItem("notes");
+                const noteToUpdate = localNotes.find(note => note.id === noteID);
+                const updatedDate = new Date().toISOString();
 
-                note.text = newNote;
-                note.modifiedDate = new Date().toISOString();
+                noteToUpdate.text = newNote;
+                noteToUpdate.modifiedDate = updatedDate;
 
-                localforage.setItem("notes", notes)
+                if (cookies.micronote) {
+                    axios.put(`/notes/${noteID}`, {
+                        text: newNote,
+                        modifiedDate: updatedDate
+                    }).then(res => console.log(res))
+                    .catch(err => console.error(err))
+                }
 
-                setNoteList(notes);
+                localforage.setItem("notes", localNotes);
+                updateNoteList(localNotes);
                 setNewNote("");
                 setNoteID("");
             } catch (error) {
                 console.error(error);
             };
         } else {
+            // make a new note!
             if (newNote.length > 0) {
                 try {
                     const submittedNote = new Note(newNote);
-                    console.log(submittedNote); 
+                    const newNoteList = await localforage.setItem("notes", [submittedNote, ...notes])
                     
-                    const newNoteList = await localforage.setItem("notes", [submittedNote, ...noteList])
-                    console.log(newNoteList);
-                    setNoteList(newNoteList);
-                    setNewNote("");
+                    if (cookies.micronote) {
+                        axios.post("/notes", {
+                            list: newNoteList,
+                            note: submittedNote
+                        }).then(res => console.log(res))
+                            .catch(err => console.error(err))
+                    };
 
+                    updateNoteList(newNoteList);
+                    setNewNote("");
                 } catch (error) {
                     console.error(error);
                 }
             }
         }
-        
     };
 
     const deleteNewNote = async (event) => {
-
         event.preventDefault();
 
         if (noteID === "" && newNote !== "") {
             setNewNote("");
+        } else if (noteID !== "") {
+            setNewNote("");
+            setNoteID("");
         } else {
             let filteredList;
             const notesList = await localforage.getItem("notes")
 
-            filteredList = await localforage.setItem("notes", notesList.filter(item => item.id !== noteID));
+            if (notesList) filteredList = await localforage.setItem("notes", notesList.filter(item => item.id !== noteID));
 
-            setNoteList(filteredList);
+            updateNoteList(filteredList);
             setNewNote("");
             setNoteID("");
         }
-
     }
 
-    // get local notes on page load
-    useEffect(() => {
-        getLocalNotes();
-    }, []);
-
-    // just having a look
-    useEffect(() => console.log(noteList), [noteList])
-
     const deleteNote = id => async () => {
+        if (cookies.micronote) {
+            axios.delete(`/notes/${id}`)
+                .then(res => console.log(res))
+                .catch(err => console.error(err));
+        }
+        
         const notesList = await localforage.getItem("notes")
         const filteredList = await localforage.setItem("notes", notesList.filter(item => item.id !== id));
-        setNoteList(filteredList);
+        updateNoteList(filteredList);
     }
 
     const editNote = (id, text) => () => {
+        window.scroll({ top: 0, left: 0, behavior: "smooth" });
         setNoteID(id);
         setNewNote(text);
     }
 
     return (
-
         <React.Fragment>
-
             <div id="new-note">
-
-                <div id="note">
+                <form id="note">
                     <label htmlFor="create-note">Create a new note</label>
                     <textarea
                         value={newNote}
@@ -126,18 +119,17 @@ const NoteList = () => {
                         placeholder="New note..."
                         form="create-note"
                         required />
-                </div>
+                </form>
 
                 <form id="create-note" className="actions">
                     <button onClick={deleteNewNote}><FA icon={faTimes} /></button>
                     <button onClick={submitNote}><FA icon={faCheck} /></button>
                 </form>
-
             </div>
 
             <div id="note-list">
-                { noteList && 
-                    noteList.map(note => {if (note !== null) {
+                { notes && 
+                    notes.map(note => {if (note !== null) {
                         return <NoteComponent
                                     key={note.id}
                                     id={note.id}
@@ -147,11 +139,7 @@ const NoteList = () => {
                         }
                     ) }
             </div>
-
-            
-
         </React.Fragment>
-        
     )
 }
 

@@ -1,7 +1,11 @@
 import logo from "../img/micronote.png"
 import "./Sidebar.css";
 
-const Sidebar = () => {
+import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
+import { faUser, faUserSecret, faCog, faQuestion } from '@fortawesome/free-solid-svg-icons'
+
+const Sidebar = ({ username, click }) => {
+
     return (
         <div id="sidebar-contents">
 
@@ -10,12 +14,19 @@ const Sidebar = () => {
                 <h1>micronote</h1>
                 <h3>mee 𐤟 cro 𐤟 no 𐤟 tay</h3>
             </div>
-        
-            {/* <div id="account-details">
-                <p>Jamie</p>
-                <p>Login</p>
+
+            <div className="info">
+                { username ?
+                    <button onClick={click}><FA icon={faUser} /> {username}</button> : 
+                    <button onClick={click}><FA icon={faUserSecret} /> guest</button>
+                }
+            </div>
+
+            {/* <div className="options">
+                <button><FA icon={faCog} /></button>
+                <button><FA icon={faQuestion} /></button>
             </div> */}
-            
+
         </div>
     )
 }
