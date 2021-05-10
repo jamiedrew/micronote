@@ -19,7 +19,6 @@
     "react-fontawesome": "^1.7.1",
     "react-markdown": "^6.0.2",
     "react-scripts": "4.0.3",
-    "remark-gfm": "^1.0.0",
     "serve": "^11.3.2",
     "web-vitals": "^1.0.1"
   },

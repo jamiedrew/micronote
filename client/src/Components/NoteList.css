@@ -19,7 +19,7 @@
     max-width: 600px;
     padding: 1rem;
     min-height: 100px;
-    font-family: var(--nunito);
+    font-family: var(--worksans);
 }
 
 #new-note > .actions {
@@ -33,16 +33,17 @@ button {
     margin-top: 0.2rem;
     margin-left: 0.2rem;
     font-size: 1.2rem;
-    background: var(--coral);
-    border: 1px solid var(--coral);
-    color: var(--black);
+    background: var(--charcoal);
+    border: 1px solid var(--charcoal);
+    color: var(--white);
+
 }
 
 button:hover {
     cursor: pointer;
-    background: var(--black);
-    border: 1px solid var(--black);
-    color: var(--yellow);
+    background: var(--copper);
+    border: 1px solid var(--copper);
+    color: var(--blue);
 }
 
 #note-list {
@@ -50,15 +51,17 @@ button:hover {
     margin-bottom: 7rem;
 }
 
+/* NOTES */
+
 .note {
     width: 66%;
     max-width: 600px;
     text-align: left;
-    padding: 1rem;
-    border: 1px solid var(--black);
+    padding: 2rem 1rem 3rem;
     margin-left: 4rem;
     margin-top: 1rem;
     position: relative;
+    border-bottom: 1px dotted var(--charcoal);
 }
 
 .note > .text {
@@ -81,6 +84,44 @@ button:hover {
     cursor: pointer;
     font-size: 1rem;
     padding: 0.6rem;
+}
+
+#note-list:last-child {
+    border: none;
+}
+
+/* INNER NOTE MARKDOWN TEXT */
+
+.note {
+    line-height: 1.4rem;
+}
+
+.note p {
+    display: block;
+    margin-top: 0.4rem;
+}
+
+.note h1, h2, h3, h4, h5, h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem
+}
+
+.note strong {
+    font-weight: 700;
+}
+
+.note ul {
+    margin-left: 1rem;
+}
+
+.note a, .note a:visited {
+    color: var(--charcoal);
+}
+
+.note a:hover {
+    color: var(--copper);
+    text-decoration: none;
 }
 
 @media (max-width: 1200px) {

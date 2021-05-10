@@ -1,3 +1,13 @@
+#logo h1 {
+    font-weight: 500;
+    font-size: 2.2rem;
+}
+
+#logo h2 {
+    font-weight: 300;
+    font-style: italic;
+}
+
 #logo {
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -5,15 +15,29 @@
 
 #logo img {
     height: 64px;
+    margin-bottom: 0.6rem;
+}
+
+#sidebar-contents .info {
+    margin-top: 3rem;
 }
 
 #sidebar-contents .info button {
     cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+#sidebar-contents .info button {
+    color: var(--white);
+    background-color: var(--blue);
+    border: 1px solid var(--blue);
 }
 
 #sidebar-contents .info button:hover {
-    color: var(--yellow);
-    background-color: var(--black);
+    color: var(--blue);
+    background-color: var(--copper);
+    border: 1px solid var(--copper);
 }
 
 #sidebar-contents .options {
@@ -81,7 +105,7 @@
 
     .info button {
         font-size: 1rem;
-        font-family: var(--nunito);
+        font-family: var(--worksans);
         padding: 0.2rem 0.6rem;
     }
 }

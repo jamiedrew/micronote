@@ -1,12 +1,22 @@
+/* import nunito */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+/* import DM sans */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* import work sans */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,300;1,400;1,700;1,500;1,900;1,400;1,700;1,900&display=swap');
 
 :root {
-    --nunito: 'Nunito', sans-serif;
+    
+    font-size: 16px;
+    --worksans: 'Work Sans', sans-serif;
 
-    --black: #0D1821;
-    --white: #FEF9EF;
-    --blue: #4C6085;
-    --green: #69A197;
-    --yellow: #FFCB77;
-    --coral: #FE6D73; 
+    --black: #11151C;
+    --white: #F4ECD6;
+    --paper: #FBF8EF;
+    --coldwhite: #D7D9CE;
+    --blue: #212D40;
+    --charcoal: #364156;
+    --copper: #D66853;
+    --tuscanred: #7D4E57;
+
 }

@@ -4,7 +4,7 @@
 }
 
 body {
-  font-family: var(--nunito);
+  font-family: var(--worksans);
   color: var(--black);
   background-color: var(--white);
 }
@@ -23,8 +23,8 @@ button {
   position: fixed;
   padding: 1rem;
   text-align: center;
-  background: var(--coral);
-  color: var(--black);
+  background: var(--charcoal);
+  color: var(--white);
   height: 100vh;
 }
 

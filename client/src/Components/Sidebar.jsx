@@ -1,4 +1,4 @@
-import logo from "../img/micronote.png"
+import logo from "../Images/book.png"
 import "./Sidebar.css";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
@@ -12,7 +12,7 @@ const Sidebar = ({ username, click }) => {
             <div id="logo">
                 <img src={logo} alt="" />
                 <h1>micronote</h1>
-                <h3>mee 𐤟 cro 𐤟 no 𐤟 tay</h3>
+                <h2>mee 𐤟 cro 𐤟 no 𐤟 tay</h2>
             </div>
 
             <div className="info">

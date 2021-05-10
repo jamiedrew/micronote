@@ -3,7 +3,7 @@
     width: 20%;
     padding: 1.2rem 1rem;
     height: 100vw;
-    background-color: var(--black);
+    background-color: var(--blue);
     color: var(--white);
     position: fixed;
     display: flex;
@@ -34,6 +34,7 @@
 
 .login-register form input {
     width: 100%;
+    font-size: 1rem;
     padding: 0.2rem 0.6rem;
     border-radius: 3px;
     text-align: center;
@@ -41,7 +42,7 @@
 }
 
 .login-register form input:focus {
-    border: 3px solid var(--coral);
+    border: 3px solid var(--copper);
 }
 
 .login-register form .buttons {
@@ -53,8 +54,8 @@
 }
 
 .login-register form .buttons > button {
-    font-family: var(--nunito);
-    font-size: 0.8rem;
+    font-family: var(--worksans);
+    font-size: 1rem;
     padding: 0.4rem 1rem;
 }
 
@@ -63,27 +64,34 @@
 }
 
 .account .actions button {
-    font-family: var(--nunito);
-    font-size: 0.8rem;
+    font-family: var(--worksans);
+    font-size: 1rem;
     font-weight: 700;
-    background-color: var(--yellow);
-    border: 1px solid var(--yellow);
+    color: var(--blue);
+    background-color: var(--white);
+    border: 1px solid var(--white);
+}
+
+.account .actions button:hover {
+    color: var(--copper);
+    background-color: var(--charcoal);
+    border: 1px solid var(--charcoal);
 }
 
 .account button.close {
     font-size: 2rem;
-    padding: 0.6rem 1rem;
     color: var(--white);
     background: none;
     border: none;
     position: absolute;
     top: 0;
     left: 0;
-    margin: 0;
+    margin: -1rem;
+    height: 100vh;
 }
 
 .account button.close:hover {
-    color: var(--yellow);
+    color: var(--copper);
 }
 
 .account p {

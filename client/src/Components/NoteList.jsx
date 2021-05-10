@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import localforage from "localforage";
 import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
 import axios from "axios";
 
 import { FontAwesomeIcon as FA} from '@fortawesome/react-fontawesome'
@@ -150,7 +149,7 @@ const NoteComponent = ({ text, id, editNote, deleteNote }) => {
 
     return (
         <div className="note">
-            <ReactMarkdown className="text" remarkPlugins={[gfm]}>{text}</ReactMarkdown>
+            <ReactMarkdown className="text">{text}</ReactMarkdown>
 
             <div className="actions">
                 <button onClick={editNote(id, text)}><FA icon={faPencilAlt} /></button>
