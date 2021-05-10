@@ -20,15 +20,10 @@ const NoteList = ({ notes, updateNoteList }) => {
 
     const submitNote = async (event) => {
         event.preventDefault();
-
         const jwt = cookies.micronote;
-        console.log(jwt);
-
         // if the state holds a noteID, it'll update that note
         // if not it'll make a new one
         if (noteID !== "" && newNote !== "") {
-            
-
             try {
                 const localNotes = await localforage.getItem("notes");
                 const noteToUpdate = localNotes.find(note => note.id === noteID);
@@ -120,6 +115,7 @@ const NoteList = ({ notes, updateNoteList }) => {
                 <form id="note">
                     <label htmlFor="create-note">Create a new note</label>
                     <textarea
+                        data-testid="new-note"
                         value={newNote}
                         onChange={event => setNewNote(event.target.value)}
                         placeholder="New note..."
@@ -134,6 +130,7 @@ const NoteList = ({ notes, updateNoteList }) => {
             </div>
 
             <div id="note-list">
+            
                 { notes && 
                     notes.map(note => {if (note !== null) {
                         return <NoteComponent

@@ -9,6 +9,9 @@ router.get("/", async (req, res) => {
         console.log("user sent to GET /notes:")
         console.log(user.id);
 
+        console.log("req.body sent to GET /notes:")
+        console.log(req.body);
+
         const data = await sync.syncNotes(user.id, req.body.list);
         console.log("data coming from GET /notes:");
         console.log(data);

@@ -49,10 +49,9 @@ function App() {
   const getUserNotes = async () => {
     try {
       if (cookies.micronote) {
-        const { data } = await axios.get("/notes", { list: notes })
-        console.log(data);
+        const { data } = await axios.post("/notes", { list: notes })
         // sync those changes to the local storage at the same time as setting the note list, for storage
-        localforage.setItem("notes", data);
+        await localforage.setItem("notes", data);
         setNotes(data);
       } else {
         const localNotes = await localforage.getItem("notes");
@@ -67,11 +66,6 @@ function App() {
       console.error(error);
     };
   }
-
-  // // DEBUG - making sure the user is being set
-  // useEffect(() => {
-  //   if (user.id) console.log(user);
-  // }, [user])
 
   return (
       <div className="App">

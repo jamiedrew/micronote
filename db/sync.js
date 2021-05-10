@@ -31,17 +31,12 @@ module.exports = {
 
             const doc = await User.findById(userID);
             console.log(`${doc.notes.length} in database for user ${userID}`);
+
             const newNotes = _.differenceWith(localNotes, doc.notes, _.isEqual);
             console.log(`${newNotes.length} new notes to upload`)
 
             // for every one of these notes, if it's not returning equal we can update them via updateNote() if the id is the same, and if not, unshift it to the start of the queue
             if (newNotes.length > 0) {
-
-                if (newNotes.length === 1) {
-                    console.log(`Uploading new note: ${newNotes[0].id}`)
-                } else {
-                    console.log(`There are ${newNotes.length} new notes to upload.`)
-                }
                 
                 for (let i = newNotes.length; i > 0; i--) {
                     const n = i - 1;
@@ -49,30 +44,25 @@ module.exports = {
                     let foundNote = (doc.notes.find(note => note.id === newNotes[n].id))
 
                     if (foundNote) {
-
-                        if (foundNote.modifiedDate > newNotes[n].modifiedDate) {
-                            console.log("Database is latest");
-                        } else if (foundNote.modifiedDate < newNotes[n].modifiedDate) {
+                        if (foundNote.modifiedDate < newNotes[n].modifiedDate) {
                             doc.notes.set(doc.notes.indexOf(foundNote), newNotes[n]);
                         } else {
                             return;
                         }
-
                     } else {
                         doc.notes.unshift(newNotes[n]);
                     }
                 }
     
-                // I THINK this is sorting in descending order
+                // sort in descending order
                 doc.notes.sort((a, b) => {
                     return b.createdDate - a.createdDate;
                 });
 
                 await doc.save();
+                return doc.notes;
                 
             } else {
-                console.log(`doc.notes coming from sync.syncNotes:`)
-                console.log(doc.notes);
                 return doc.notes;
             }
         
