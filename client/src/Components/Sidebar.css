@@ -64,6 +64,10 @@
         align-items: center;
     }
 
+    #sidebar-contents .info {
+        margin-top: 0;
+    }
+
     #logo {
         display: flex;
         align-items: center;
@@ -75,7 +79,7 @@
         height: 40px;
     }
 
-    #logo h3 {
+    #logo h2 {
         display: none;
     }
 
@@ -90,12 +94,16 @@
     #sidebar-contents {
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         margin: 1rem auto;
     }
 
     #logo {
         flex-direction: column;
+    }
+
+    #logo h1 {
+        display: none;
     }
 
     #logo img {

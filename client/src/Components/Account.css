@@ -129,6 +129,7 @@
 
     .account button.close {
         left: 90%;
+        height: 5rem;
     }
 
     .login-register form div {
@@ -159,10 +160,16 @@
         width: 100%;
     }
 
+    .account .actions button {
+        padding: 0.6rem 1rem;
+    }
+
     .flash {
         width: 100%;
         padding: 1rem;
-        background-color: var(--black);
+        font-weight: 700;
+        background-color: var(--copper);
+        color: var(--black);
     }
 
 }
@@ -188,9 +195,9 @@
 
     .account button.close {
         position: fixed;
-        margin-top: -0.2rem;
-        top: 0;
-        left: 0;
-        width: 100%;
+        padding: 0 0.5rem;
+        margin: 0;
+        top: -1rem;
+        left: 50vw;
     }
 }
